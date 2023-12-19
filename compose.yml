@@ -1,0 +1,131 @@
+version: '3.2'
+services:
+  loki:
+    image: grafana/loki:2.9.1
+    container_name: loki
+    ports:
+    - 3100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.9.1
+    container_name: promtail
+    volumes:
+    - /var/log:/var/log:ro
+    command: -config.file=/etc/promtail/config.yml
+    logging:
+      driver: loki
+      options:
+       loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - loki
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.2
+    container_name: cadvisor
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    - /dev/disk/:/dev/disk:ro
+    devices:
+    - /dev/kmsg:/dev/kmsg
+    privileged: true
+    userns_mode: 'host'
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - loki
+
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    container_name: node-exporter
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - loki
+
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    container_name: prometheus
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    - --enable-feature=agent
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - cadvisor
+    - node-exporter
+    - loki
+
+  mimir:
+    image: grafana/mimir:2.9.3
+    command: ["-config.file=/etc/mimir.yaml"]
+    container_name: mimir
+    volumes:
+      - ./mimir.yaml:/etc/mimir.yaml
+      - ./alertmanager-fallback-config.yaml:/etc/alertmanager-fallback-config.yaml
+      - ./data/mimir:/data
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - prometheus
+    - loki
+
+  grafana:
+    image: grafana/grafana:10.2.2
+    container_name: grafana
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - mimir
+    - loki
+
+  overpass-server:
+    build: 
+      context: ./overpass-api-server
+    image: osm3s-server
+    container_name: overpass-server
+    environment:
+      - overpass_areas=yes
+    volumes:
+      - ./data/overpass-server/db:/overpass/db
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - loki
+
+  overpass-httpd:
+    build: 
+      context: ./overpass-api-httpd
+    image: osm3s-httpd
+    container_name: overpass-httpd
+    volumes:
+      - ./data/overpass-server/db:/overpass/db
+    ports:
+      - 80:80
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - loki

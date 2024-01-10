@@ -4,7 +4,8 @@ scrape_configs:
   static_configs:
   - targets:
     - cadvisor:8080
-    - node-exporter:9100
+    - docker-host:9100
+      #- node-exporter:9100
 
 remote_write:
   - url: http://mimir:8080/api/v1/push

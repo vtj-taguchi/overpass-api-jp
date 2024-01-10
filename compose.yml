@@ -40,15 +40,15 @@ services:
     depends_on:
     - loki
 
-  node-exporter:
-    image: prom/node-exporter:v1.7.0
-    container_name: node-exporter
-    logging:
-      driver: loki
-      options:
-        loki-url: http://127.0.0.1:3100/loki/api/v1/push
-    depends_on:
-    - loki
+#  node-exporter:
+#    image: prom/node-exporter:v1.7.0
+#    container_name: node-exporter
+#    logging:
+#      driver: loki
+#      options:
+#        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+#    depends_on:
+#    - loki
 
   prometheus:
     image: prom/prometheus:v2.48.0
@@ -58,13 +58,15 @@ services:
     - --enable-feature=agent
     volumes:
     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    extra_hosts:
+    - "docker-host:host-gateway"
     logging:
       driver: loki
       options:
         loki-url: http://127.0.0.1:3100/loki/api/v1/push
     depends_on:
     - cadvisor
-    - node-exporter
+    #- node-exporter
     - loki
 
   mimir:
@@ -121,6 +123,8 @@ services:
     container_name: overpass-httpd
     volumes:
       - ./data/overpass-server/db:/overpass/db
+      # - ./work/httpd-conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      # - ./work/httpd-conf/dot-htdigest:/.htdigest
     ports:
       - 80:80
     logging:

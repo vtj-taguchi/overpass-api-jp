@@ -1,0 +1,29 @@
+version: '3.2'
+services:
+  overpass-server:
+    build: 
+      context: ./overpass-api-server
+    image: osm3s-server
+    container_name: overpass-server
+    environment:
+      - overpass_areas=yes
+    volumes:
+      - ./db-jp:/overpass/db
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+
+  overpass-httpd:
+    build: 
+      context: ./overpass-api-httpd
+    image: osm3s-httpd
+    container_name: overpass-httpd
+    volumes:
+      - ./db-jp:/overpass/db
+    ports:
+      - 80:80
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push

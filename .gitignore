@@ -2,3 +2,4 @@ data/
 work/
 
 .DS_Store
+.env

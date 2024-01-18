@@ -24,7 +24,6 @@ else
     bin/download_clone.sh --db-dir=/overpass/db --source=https://dev.overpass-api.de/api_drolbr/ --meta=attic
   fi
   bin/dispatcher --osm-base --db-dir=db/ &
-  export OVERPASS_DB_DIR=/overpass/db/
   sleep 1
   bin/fetch_osc_and_apply.sh https://planet.osm.org/replication/minute &
   if [[ "${overpass_areas}" == "yes" ]]; then
@@ -32,7 +31,7 @@ else
       cp -pR rules/ db/
     fi
     bin/dispatcher --areas --db-dir=db/ &
-    bin/rules_delta_loop.sh $OVERPASS_DB_DIR &
+    bin/rules_delta_loop.sh db/ &
   fi
 fi  
 

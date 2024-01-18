@@ -1,11 +1,7 @@
 import request from './request';
 import Progress from './Progress';
 
-let backends = [
-  'https://overpass.kumi.systems/api/interpreter',
-  'https://overpass-api.de/api/interpreter',
-  'https://overpass.openstreetmap.ru/cgi/interpreter'
-]
+let backends = ['http://124.35.85.87/api/interpreter'];
 
 export default function postData(data, progress) {
   progress = progress || new Progress();

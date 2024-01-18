@@ -102,7 +102,7 @@ services:
 
   overpass-server:
     build: 
-      context: ./overpass-api-server
+      context: ./docker-overpass/overpass-api-server
     image: osm3s-server
     container_name: overpass-server
     environment:
@@ -118,7 +118,7 @@ services:
 
   overpass-httpd:
     build: 
-      context: ./overpass-api-httpd
+      context: ./docker-overpass/overpass-api-httpd
     image: osm3s-httpd
     container_name: overpass-httpd
     volumes:

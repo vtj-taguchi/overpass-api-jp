@@ -8,11 +8,13 @@ import {readFileSync} from "fs";
 import {resolve} from "path";
 import {execSync} from "child_process";
 
+/*
 const GIT_VERSION = JSON.stringify(
   `${execSync("git log -1 --format=%cd --date=short", {
     encoding: "utf-8"
   }).trim()}/${execSync("git describe --always", {encoding: "utf-8"}).trim()}`
 );
+*/
 
 const dependencies = JSON.parse(
   readFileSync("package.json", {encoding: "utf-8"})
@@ -49,8 +51,9 @@ export default defineConfig(() => ({
     }
   },
   define: {
-    APP_DEPENDENCIES,
-    GIT_VERSION
+    APP_DEPENDENCIES
+    //APP_DEPENDENCIES,
+    //GIT_VERSION
   },
   plugins: [
     inject({

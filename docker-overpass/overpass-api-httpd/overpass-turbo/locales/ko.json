@@ -209,7 +209,7 @@
     "warning.browser.title": "지원하지 않는 브라우저입니다 :(",
     "warning.browser.expl.1": "현재 사용 중인 브라우저는 이 애플리케이션(의 중요한 부분)을 구동하는 데 (거의) 적합하지 않습니다. <small><a href=\"http://en.wikipedia.org/wiki/Web_storage#localStorage\">웹 저장소 API(Web Storage API)</a>와 <a href=\"http://en.wikipedia.org/wiki/Cross-origin_resource_sharing\">교차 출처 자원 공유(CORS)</a> 기능을 지원하는 브라우저여야 합니다.</small>",
     "warning.browser.expl.2": "일부 브라우저(파이어폭스나 크롬 등)에서 이 사이트를 이용하려면 쿠키 또는 '로컬 데이터'를 활성화해야 할 수 있습니다.",
-    "warning.browser.expl.3": "브라우저를 보다 최신 버전으로 업그레이드하거나 적합한 브라우저로 바꿔 주세요! 본 웹 사이트는 <a href=\"http://www.opera.com\">오페라</a>, <a href=\"http://www.google.com/intl/de/chrome/browser/\">크롬</a>, <a href=\"http://www.mozilla.org/de/firefox/\">파이어폭스</a> 최신 버전에서 테스트되었습니다. 아니면 <a href=\"http://overpass-api.de/query_form.html\">Overpass_API 질의문 입력란</a>을 사용할 수 있습니다.",
+    "warning.browser.expl.3": "브라우저를 보다 최신 버전으로 업그레이드하거나 적합한 브라우저로 바꿔 주세요! 본 웹 사이트는 <a href=\"http://www.opera.com\">오페라</a>, <a href=\"http://www.google.com/intl/de/chrome/browser/\">크롬</a>, <a href=\"http://www.mozilla.org/de/firefox/\">파이어폭스</a> 최신 버전에서 테스트되었습니다. 아니면 <a href=\"http://124.35.85.87/query_form.html\">Overpass_API 질의문 입력란</a>을 사용할 수 있습니다.",
     "warning.incomplete.title": "불완전한 데이터",
     "warning.incomplete.expl.1": "이 질의는 아무 마디도 반환하지 않았습니다. 오픈스트리트맵에서는 마디에만 좌표가 부여됩니다. 따라서 마디를 갖고 있지 않은 길은 지도에 표시할 수 없습니다.",
     "warning.incomplete.expl.2": "원하는 데이터를 얻지 못했다면 아래에 있는 '질의문 복구하기'를 선택하세요. 그러면 <i>overpass turbo</i>가 질의문을 복구(자동 완성)하는 일을 도와 줍니다. 복구를 원치 않는다면 현재 데이터로 작업을 계속할 수 있습니다.",

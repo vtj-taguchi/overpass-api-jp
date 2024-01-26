@@ -225,7 +225,7 @@ class IDE {
   init() {
     this.waiter.addInfo("ide starting up");
     $("#overpass-turbo-version").html(
-      `overpass-turbo <code>${GIT_VERSION}</code>` // eslint-disable-line no-undef
+      `overpass-turbo <code>customized by overpass-api-jp</code>` // eslint-disable-line no-undef
     );
     $("#overpass-turbo-dependencies").html(
       APP_DEPENDENCIES // eslint-disable-line no-undef

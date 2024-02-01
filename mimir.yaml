@@ -10,7 +10,7 @@ compactor:
   sharding_ring:
     kvstore:
       store: memberlist
-
+  
 distributor:
   ring:
     instance_addr: 127.0.0.1

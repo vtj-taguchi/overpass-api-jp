@@ -123,10 +123,14 @@ services:
     container_name: overpass-httpd
     volumes:
       - ./data/overpass-server/db:/overpass/db
+      - ./data/overpass-httpd/letsencrypt:/etc/letsencrypt
+      - ./docker-overpass/overpass-api-httpd/ssl-overpass-osm-jp.conf:/usr/local/apache2/conf/ssl-overpass-osm-jp.conf
+      - ./docker-overpass/overpass-api-httpd/rewrite.conf:/usr/local/apache2/conf/rewrite.conf
       # - ./work/httpd-conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       # - ./work/httpd-conf/dot-htdigest:/.htdigest
     ports:
       - 80:80
+      - 443:443
     logging:
       driver: loki
       options:

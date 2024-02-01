@@ -1,0 +1,1 @@
+0 5 * * 3 bash -c "sleep \$((\$RANDOM \% 3600)) && ${ENTER PATH}/overpass-api-jp/https-cert-update.sh" | logger -t https-cert-update

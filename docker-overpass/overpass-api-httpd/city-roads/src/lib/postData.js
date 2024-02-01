@@ -1,7 +1,7 @@
 import request from './request';
 import Progress from './Progress';
 
-let backends = ['http://124.35.85.87/api/interpreter'];
+let backends = ['https://overpass.openstreetmap.jp/api/interpreter'];
 
 export default function postData(data, progress) {
   progress = progress || new Progress();

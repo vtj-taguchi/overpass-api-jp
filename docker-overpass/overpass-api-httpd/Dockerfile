@@ -14,7 +14,7 @@ RUN cd /overpass-turbo && \
     yarn build
 
 FROM httpd:2.4-alpine
-RUN apk add libstdc++ expat lz4-dev bash
+RUN apk add --no-cache libstdc++ expat lz4-dev bash apache2-ssl certbot
 COPY --from=build /overpass /overpass
 RUN mv /overpass/html/* /usr/local/apache2/htdocs/
 COPY custom_httpd.sh ./custom_httpd.sh

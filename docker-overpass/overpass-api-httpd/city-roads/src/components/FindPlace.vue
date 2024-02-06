@@ -183,6 +183,9 @@ export default {
     pickSuggestion(suggestion) {
       this.lastSuggestion = suggestion;
       this.error = false;
+
+      this.useOSM(suggestion);
+/*
       if (appState.isCacheEnabled() && suggestion.areaId) {
         this.checkCache(suggestion)
           .catch(error => {
@@ -195,6 +198,7 @@ export default {
         // we don't have cache for nodes yet.
         this.useOSM(suggestion);
       }
+*/
     },
 
     restartLoadingMonitor() {

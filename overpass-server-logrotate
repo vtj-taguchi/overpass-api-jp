@@ -1,0 +1,29 @@
+${ENTER PATH}/overpass-api-jp/data/overpass-server/db/database.log
+${ENTER PATH}/overpass-api-jp/data/overpass-server/db/fetch_osc_and_apply.log
+${ENTER PATH}/overpass-api-jp/data/overpass-server/db/rules_loop.log
+${ENTER PATH}/overpass-api-jp/data/overpass-server/db/transactions.log
+{
+  rotate 7
+  daily
+  missingok
+  notifempty
+  compress
+  sharedscripts
+  prerotate
+    docker compose stop overpass-server &&
+      logger -it overpass-server container stopped. &&
+      sleep 1 
+  endscript
+  postrotate
+    dbdir=${ENTER PATH}/overpass-api-jp/data/overpass-server/db
+    for f in osm3s_osm_base osm3s_areas
+    do
+      [ -e ${dbdir}/$f ] && 
+        rm ${dbdir}/$f &&
+        logger -it overpass-server-logrotate $f Deleted. 
+    done
+    docker compose start overpass-server &&
+      logger -it overpass-server container started. 
+  endscript
+  su ${ENTER USER} ${ENTER GROUP}
+}

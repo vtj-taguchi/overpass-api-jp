@@ -16,6 +16,7 @@ elif [[ $DB_UID -ne $PROC_UID ]]; then
   exit 0
 else
   cd /overpass
+  tail -n1 -Fq db/*.log | cut -f3- -d" " &
   if [[ ! -f /overpass/db/replicate_id && "${init_from_clone}" == "geo" ]]; then
     bin/download_clone.sh --db-dir=/overpass/db --source=https://dev.overpass-api.de/api_drolbr/ --meta=no
   elif [[ ! -f /overpass/db/replicate_id && "${init_from_clone}" == "meta" ]]; then

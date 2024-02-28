@@ -18,6 +18,7 @@ RUN apk add --no-cache libstdc++ expat lz4-dev bash apache2-ssl certbot
 COPY --from=build /overpass /overpass
 RUN mv /overpass/html/* /usr/local/apache2/htdocs/
 COPY custom_httpd.sh ./custom_httpd.sh
+COPY environment.txt ./environment.txt
 RUN ./custom_httpd.sh
 COPY --from=nodejs-app-build /city-roads/dist /usr/local/apache2/htdocs/city-roads
 COPY --from=nodejs-app-build /overpass-turbo/dist /usr/local/apache2/htdocs/overpass-turbo

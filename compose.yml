@@ -52,6 +52,17 @@ services:
 #    depends_on:
 #    - loki
 
+  apache-exporter:
+    image: lusotycoon/apache-exporter:v1.0.4
+    container_name: apache-exporter
+    command: "--scrape_uri http://overpass-httpd/.server-status/?auto"
+    logging:
+      driver: loki
+      options:
+        loki-url: http://127.0.0.1:3100/loki/api/v1/push
+    depends_on:
+    - loki
+
   prometheus:
     image: prom/prometheus:v2.48.0
     container_name: prometheus
@@ -69,6 +80,7 @@ services:
     depends_on:
     - cadvisor
     #- node-exporter
+    - apache-exporter
     - loki
 
   mimir:
@@ -128,6 +140,7 @@ services:
       - ./data/overpass-httpd/letsencrypt:/etc/letsencrypt
       - ./docker-overpass/overpass-api-httpd/ssl-overpass-osm-jp.conf:/usr/local/apache2/conf/ssl-overpass-osm-jp.conf
       - ./docker-overpass/overpass-api-httpd/rewrite.conf:/usr/local/apache2/conf/rewrite.conf
+      - ./docker-overpass/overpass-api-httpd/server-status.conf:/usr/local/apache2/conf/server-status.conf
       # - ./work/httpd-conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       # - ./work/httpd-conf/dot-htdigest:/.htdigest
     ports:

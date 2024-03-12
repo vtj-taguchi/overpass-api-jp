@@ -26,6 +26,8 @@ else
   fi
   bin/dispatcher --osm-base --db-dir=db/ &
   sleep 1
+  python3 /overpass-exporter.py &
+  sleep 1
   bin/fetch_osc_and_apply.sh https://planet.osm.org/replication/minute &
   if [[ "${overpass_areas}" == "yes" ]]; then
     if [[ ! -d db/rules/ ]]; then

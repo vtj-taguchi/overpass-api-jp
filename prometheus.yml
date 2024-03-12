@@ -18,6 +18,12 @@ scrape_configs:
   - targets:
     - apache-exporter:9117
 
+- job_name: overpass-exporter
+  scrape_interval: 5s
+  static_configs:
+  - targets:
+    - overpass-server:9246
+
 remote_write:
   - url: http://mimir:8080/api/v1/push
     headers:

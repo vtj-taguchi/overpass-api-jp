@@ -2,7 +2,7 @@ import prometheus_client
 import time
 import subprocess
 
-UPDATE_PERIOD = 5000
+UPDATE_PERIOD = 5
 OVERPASS_SPACE = prometheus_client.Gauge('overpass_memory_space',
                                           'overpass_memory_space',
                                           ['state'])
@@ -45,9 +45,9 @@ while True:
     elif "Counter of finished requests" in l:
       OVERPASS_REQUESTS.labels("finished").set(l.split(":")[1])
     elif "Counter of load shedded requests" in l:
-      OVERPASS_REQUESTS.labels("load_shedded ").set(l.split(":")[1])
+      OVERPASS_REQUESTS.labels("load_shedded").set(l.split(":")[1])
     elif "Counter of rate limited requests" in l:
-      OVERPASS_REQUESTS.labels("rate_limited ").set(l.split(":")[1])
+      OVERPASS_REQUESTS.labels("rate_limited").set(l.split(":")[1])
     elif "Counter of as duplicate rejected requests" in l:
       OVERPASS_REQUESTS.labels("duplicate rejected").set(l.split(":")[1])
     elif "Number of not yet opened connections" in l:

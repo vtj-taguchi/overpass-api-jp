@@ -138,9 +138,10 @@ services:
     volumes:
       - ./data/overpass-server/db:/overpass/db
       - ./data/overpass-httpd/letsencrypt:/etc/letsencrypt
-      - ./docker-overpass/overpass-api-httpd/ssl-overpass-osm-jp.conf:/usr/local/apache2/conf/ssl-overpass-osm-jp.conf
-      - ./docker-overpass/overpass-api-httpd/rewrite.conf:/usr/local/apache2/conf/rewrite.conf
-      - ./docker-overpass/overpass-api-httpd/server-status.conf:/usr/local/apache2/conf/server-status.conf
+      - ./docker-overpass/overpass-api-httpd/overpass-osmjp-common.conf:/usr/local/apache2/conf/overpass-osmjp-common.conf
+      - ./docker-overpass/overpass-api-httpd/overpass-osmjp-prov.conf:/usr/local/apache2/conf/ratelimit.conf
+      - ./docker-overpass/overpass-api-httpd/overpass-osmjp-prov.conf:/usr/local/apache2/conf/overpass-osmjp-prov.conf
+      - ./docker-overpass/overpass-api-httpd/overpass-osmjp-prov.conf:/usr/local/apache2/conf/overpass-osmjp-ssl-common.conf
       # - ./work/httpd-conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
       # - ./work/httpd-conf/dot-htdigest:/.htdigest
     ports:

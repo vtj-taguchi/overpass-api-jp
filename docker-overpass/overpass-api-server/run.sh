@@ -24,7 +24,7 @@ else
   elif [[ ! -f /overpass/db/replicate_id && "${init_from_clone}" == "attic" ]]; then
     bin/download_clone.sh --db-dir=/overpass/db --source=https://dev.overpass-api.de/api_drolbr/ --meta=attic
   fi
-  bin/dispatcher --osm-base --attic --allow-duplicate-queries=yes --db-dir=db/ &
+  bin/dispatcher --osm-base --attic --allow-duplicate-queries=yes --rate-limit=8 --db-dir=db/ &
   sleep 1
   python3 /overpass-exporter.py &
   sleep 1
@@ -33,7 +33,7 @@ else
     if [[ ! -d db/rules/ ]]; then
       cp -pR rules/ db/
     fi
-    bin/dispatcher --areas --allow-duplicate-queries=yes --db-dir=db/ &
+    bin/dispatcher --areas --allow-duplicate-queries=yes --rate-limit=8 --db-dir=db/ &
     bin/rules_delta_loop.sh db/ &
   fi
 fi  
